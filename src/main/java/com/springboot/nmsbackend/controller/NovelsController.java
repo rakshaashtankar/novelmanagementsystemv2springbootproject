@@ -68,6 +68,17 @@ public class NovelsController {
         }
     }
 
-    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?>  deleteNovelById(@PathVariable Integer id) {
+        try {
+            boolean isDeleted = novelServiceImplementation.deleteById(id);
+            if(isDeleted) {
+                return new ResponseEntity<>("Novel details deleted for id " +id +" .", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Error deleteing novel details with id " +id+ " .", HttpStatus.BAD_REQUEST);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Novel does not exist by id " + id + " " + e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 
 }
