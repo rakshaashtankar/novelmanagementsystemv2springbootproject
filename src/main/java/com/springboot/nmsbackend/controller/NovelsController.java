@@ -30,7 +30,9 @@ public class NovelsController {
                 return new ResponseEntity<>("New novel added successfully with id " +newNovel.getId(), HttpStatus.OK);
             }
             return new ResponseEntity<>("Insufficient data.", HttpStatus.BAD_REQUEST);
-        }  catch (Exception e) {
+        } catch (DataIntegrityViolationException e) {
+            return new ResponseEntity<>("Duplicate novel entry. A novel with the same title, author, genre, and synopsis already exists.", HttpStatus.CONFLICT);
+        } catch (Exception e) {
             return new ResponseEntity<>("An unexpected error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
