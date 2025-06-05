@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -33,6 +34,16 @@ public class NovelsController {
         } catch (DataIntegrityViolationException e) {
             return new ResponseEntity<>("Duplicate novel entry. A novel with the same title, author, genre, and synopsis already exists.", HttpStatus.CONFLICT);
         } catch (Exception e) {
+            return new ResponseEntity<>("An unexpected error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAllNovels() {
+        try {
+            List<Novels> novelList = novelServiceImplementation.getAllNovels();
+            return new ResponseEntity<>(novelList, HttpStatus.OK);
+        } catch (RuntimeException e) {
             return new ResponseEntity<>("An unexpected error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
