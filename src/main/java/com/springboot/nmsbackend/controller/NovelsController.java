@@ -57,4 +57,14 @@ public class NovelsController {
             return new ResponseEntity<>("Novel does not exist by id " + id + " " + e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateNovelById(@RequestBody Novels novel,@PathVariable Integer id ) {
+        try {
+            Novels updatedNovel = novelServiceImplementation.updateNovel(novel, id);
+            return new ResponseEntity<>("Novel details update /n" + updatedNovel, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Novel does not exist by id " + id + " " + e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }
