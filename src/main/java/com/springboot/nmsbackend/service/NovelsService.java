@@ -8,4 +8,5 @@ public interface NovelsService {
     Novels addNovel(Novels novel);
     List<Novels> getAllNovels();
     Novels getNovelById(Integer id);
+    Novels updateNovel(Novels novel, Integer id);
 }
