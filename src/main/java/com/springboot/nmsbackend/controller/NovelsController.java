@@ -47,4 +47,14 @@ public class NovelsController {
             return new ResponseEntity<>("An unexpected error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getNovelById(@PathVariable Integer id) {
+        try {
+            Novels novelById = novelServiceImplementation.getNovelById(id);
+            return new ResponseEntity<>(novelById, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Novel does not exist by id " + id + " " + e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 }
