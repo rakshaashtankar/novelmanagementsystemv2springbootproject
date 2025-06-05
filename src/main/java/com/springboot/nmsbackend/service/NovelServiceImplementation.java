@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -23,10 +24,11 @@ public class NovelServiceImplementation implements NovelsService{
             return novelsRepository.save(novel);
         } catch (DataIntegrityViolationException e) {
             throw new RuntimeException("Duplicate novel entry. A novel with the same title, author, genre, and synopsis already exists.", e);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             throw new RuntimeException(e.getMessage());
         }
 
     }
+
+
 }
