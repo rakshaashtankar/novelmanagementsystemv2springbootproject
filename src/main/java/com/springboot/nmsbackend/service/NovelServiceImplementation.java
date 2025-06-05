@@ -45,4 +45,27 @@ public class NovelServiceImplementation implements NovelsService{
         return novelsRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Novel with id " + id + " does not exist."));
     }
+
+    @Override
+    public Novels updateNovel(Novels novel, Integer id) {
+        try {
+            Novels updatedNovel = novelsRepository.findById(id).get();
+            if (Objects.nonNull(novel.getNovelTitle()) && !"".equalsIgnoreCase(novel.getNovelTitle()) && !novel.getNovelTitle().equals(updatedNovel.getNovelTitle())) {
+                updatedNovel.setNovelTitle(novel.getNovelTitle());
+            }
+            if (Objects.nonNull(novel.getNovelAuthor()) && !"".equalsIgnoreCase(novel.getNovelAuthor()) && !novel.getNovelAuthor().equals(updatedNovel.getNovelAuthor())) {
+                updatedNovel.setNovelAuthor(novel.getNovelAuthor());
+            }
+            if (Objects.nonNull(novel.getNovelGenre()) && !"".equalsIgnoreCase(novel.getNovelGenre()) && !novel.getNovelGenre().equals(updatedNovel.getNovelGenre())) {
+                updatedNovel.setNovelGenre(novel.getNovelGenre());
+            }
+            if (Objects.nonNull(novel.getNovelSynopsis()) && !"".equalsIgnoreCase(novel.getNovelSynopsis()) && !novel.getNovelSynopsis().equals(updatedNovel.getNovelSynopsis())) {
+                updatedNovel.setNovelSynopsis(novel.getNovelSynopsis());
+            }
+            novelsRepository.save(updatedNovel);
+            return updatedNovel;
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Novel with id " + id + " does not exist. " + e.getMessage());
+        }
+    }
 }
