@@ -9,4 +9,5 @@ public interface NovelsService {
     List<Novels> getAllNovels();
     Novels getNovelById(Integer id);
     Novels updateNovel(Novels novel, Integer id);
+    boolean deleteById(Integer id);
 }
