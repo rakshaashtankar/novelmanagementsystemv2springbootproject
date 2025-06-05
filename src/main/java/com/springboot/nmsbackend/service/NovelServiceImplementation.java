@@ -68,4 +68,17 @@ public class NovelServiceImplementation implements NovelsService{
             throw new RuntimeException("Novel with id " + id + " does not exist. " + e.getMessage());
         }
     }
+
+    @Override
+    public boolean deleteById(Integer id) {
+        try{
+            if(novelsRepository.findById(id).isPresent()) {
+                novelsRepository.deleteById(id);
+                return true;
+            }
+            return false;
+        }catch (RuntimeException e) {
+            throw new RuntimeException("Novel with id " + id + " does not exist. " + e.getMessage());
+        }
+    }
 }
