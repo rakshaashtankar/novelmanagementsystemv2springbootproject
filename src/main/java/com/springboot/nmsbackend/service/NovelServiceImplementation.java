@@ -13,29 +13,9 @@ import java.util.Objects;
 public class NovelServiceImplementation implements NovelsService{
 
     @Autowired
-    private static NovelsRepository novelsRepository;
+    private NovelsRepository novelsRepository;
 
-    public boolean addNovel(Novels novel) {
-        boolean isAdded = false;
-        try{
-            Novels newNovel = new Novels();
-            if(Objects.nonNull(novel.getNovelTitle()) && !"".equalsIgnoreCase(novel.getNovelTitle())) {
-               newNovel.setNovelTitle(novel.getNovelTitle());
-            }
-            if(Objects.nonNull(novel.getNovelAuthor()) && !"".equalsIgnoreCase(novel.getNovelAuthor())) {
-                newNovel.setNovelAuthor(novel.getNovelAuthor());
-            }
-            if(Objects.nonNull(novel.getNovelGenre()) && !"".equalsIgnoreCase(novel.getNovelGenre())) {
-                newNovel.setNovelGenre(novel.getNovelGenre());
-            }
-            if(Objects.nonNull(novel.getNovelSynopsis()) && !"".equalsIgnoreCase(novel.getNovelSynopsis())) {
-                newNovel.setNovelSynopsis(novel.getNovelSynopsis());
-            }
-            novelsRepository.save(newNovel);
-            isAdded = true;
-        } catch (NullPointerException e) {
-            throw new NullPointerException("Incomplete data");
-        }
-        return isAdded;
+    public Novels addNovel(Novels novel) {
+        return novelsRepository.save(novel);
     }
 }
