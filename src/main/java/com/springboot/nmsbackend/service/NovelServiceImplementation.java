@@ -30,5 +30,12 @@ public class NovelServiceImplementation implements NovelsService{
 
     }
 
-
+    @Override
+    public List<Novels> getAllNovels() {
+        try {
+            return novelsRepository.findAll();
+        } catch (NullPointerException e ) {
+            throw new RuntimeException("No novel entries in table. "+ e.getMessage());
+        }
+    }
 }
