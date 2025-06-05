@@ -23,4 +23,5 @@ public class Novels {
 
     @Column(nullable = false)
     private String novelSynopsis;
+
 }
