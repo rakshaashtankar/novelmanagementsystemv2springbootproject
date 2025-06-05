@@ -19,6 +19,7 @@ public class NovelServiceImplementation implements NovelsService{
     @Autowired
     private NovelsRepository novelsRepository;
 
+    @Override
     public Novels addNovel(Novels novel) {
         try {
             return novelsRepository.save(novel);
@@ -37,5 +38,11 @@ public class NovelServiceImplementation implements NovelsService{
         } catch (RuntimeException e ) {
             throw new RuntimeException("No novel entries in table. "+ e.getMessage());
         }
+    }
+
+    @Override
+    public Novels getNovelById(Integer id) {
+        return novelsRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Novel with id " + id + " does not exist."));
     }
 }

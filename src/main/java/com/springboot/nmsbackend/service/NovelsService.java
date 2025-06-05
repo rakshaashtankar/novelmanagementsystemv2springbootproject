@@ -7,5 +7,5 @@ import java.util.List;
 public interface NovelsService {
     Novels addNovel(Novels novel);
     List<Novels> getAllNovels();
-    Novels getNovelById(Novels novel);
+    Novels getNovelById(Integer id);
 }
