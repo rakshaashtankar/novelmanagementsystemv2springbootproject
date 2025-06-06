@@ -65,7 +65,7 @@ public class NovelServiceImplementation implements NovelsService{
             novelsRepository.save(updatedNovel);
             return updatedNovel;
         } catch (RuntimeException e) {
-            throw new RuntimeException("Novel with id " + id + " does not exist. " + e.getMessage());
+            throw new RuntimeException("Novel with id " + id + " does not exist. ");
         }
     }
 
