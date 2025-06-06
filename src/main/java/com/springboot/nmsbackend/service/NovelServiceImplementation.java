@@ -81,4 +81,13 @@ public class NovelServiceImplementation implements NovelsService{
             throw new RuntimeException("Novel with id " + id + " does not exist. " + e.getMessage());
         }
     }
+
+    @Override
+    public List<Novels> findByNovelTitle(String title) {
+        try{
+            return novelsRepository.findByNovelTitle(title);
+        }catch (RuntimeException e) {
+            throw new RuntimeException("Novel does not exist by title " + title + "." + e.getMessage());
+        }
+    }
 }
