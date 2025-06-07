@@ -81,5 +81,26 @@ public class NovelsController {
         }
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<?> findBySearchTerm(@RequestParam("term") String term) {
+        if (term == null || term.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Search term cannot be empty");
+        }
+
+        try {
+            List<Novels> novelList = novelServiceImplementation.findBySearchTerm(term.trim().toLowerCase());
+
+            if (novelList.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("No novels found matching '" + term + "'");
+            }
+
+            return ResponseEntity.ok(novelList);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body("Error processing search: " + e.getMessage());
+        }
+    }
+
 
 }
