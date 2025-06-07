@@ -10,5 +10,4 @@ public interface NovelsService {
     Novels getNovelById(Integer id);
     Novels updateNovel(Novels novel, Integer id);
     boolean deleteById(Integer id);
-    List<Novels> findByNovelTitle(String novelTitle);
 }

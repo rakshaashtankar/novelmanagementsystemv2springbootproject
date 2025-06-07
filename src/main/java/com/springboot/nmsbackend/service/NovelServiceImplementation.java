@@ -5,6 +5,7 @@ import com.springboot.nmsbackend.repository.NovelsRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class NovelServiceImplementation implements NovelsService{
     @Override
     public List<Novels> getAllNovels() {
         try {
-            return novelsRepository.findAll();
+            return novelsRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
         } catch (RuntimeException e ) {
             throw new RuntimeException("No novel entries in table. "+ e.getMessage());
         }
@@ -79,15 +80,6 @@ public class NovelServiceImplementation implements NovelsService{
             return false;
         }catch (RuntimeException e) {
             throw new RuntimeException("Novel with id " + id + " does not exist. " + e.getMessage());
-        }
-    }
-
-    @Override
-    public List<Novels> findByNovelTitle(String title) {
-        try{
-            return novelsRepository.findByNovelTitle(title);
-        }catch (RuntimeException e) {
-            throw new RuntimeException("Novel does not exist by title " + title + "." + e.getMessage());
         }
     }
 }
