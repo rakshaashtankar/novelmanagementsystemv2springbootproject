@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@CrossOrigin(value = "*")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/novels")
 public class NovelsController {
 

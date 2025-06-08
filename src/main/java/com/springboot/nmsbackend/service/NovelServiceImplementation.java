@@ -10,12 +10,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 import java.util.Objects;
 
 @Service
 @NoArgsConstructor
+@CrossOrigin(origins = "*")
 public class NovelServiceImplementation implements NovelsService{
 
     @Autowired
