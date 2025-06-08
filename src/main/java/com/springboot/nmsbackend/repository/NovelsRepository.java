@@ -1,6 +1,8 @@
 package com.springboot.nmsbackend.repository;
 
 import com.springboot.nmsbackend.model.Novels;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +19,6 @@ public interface NovelsRepository extends JpaRepository<Novels, Integer> {
             "LOWER(n.novelSynopsis) LIKE LOWER(CONCAT('%', :searchText, '%')) OR " +
             "LOWER(n.novelTitle) LIKE LOWER(CONCAT('%', :searchText, '%')) " +
             "ORDER BY n.id")
-    List<Novels> findBySearchText(@Param("searchText") String searchText);
+    Page<Novels> findBySearchText(@Param("searchText") String searchText, Pageable pageable);
 
 }

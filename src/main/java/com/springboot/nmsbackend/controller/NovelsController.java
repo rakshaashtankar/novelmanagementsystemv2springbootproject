@@ -5,6 +5,8 @@ import com.springboot.nmsbackend.service.NovelServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,13 +91,16 @@ public class NovelsController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> findBySearchTerm(@RequestParam("term") String term) {
+    public ResponseEntity<?> findBySearchTerm(@RequestParam("term") String term,
+            @RequestParam(defaultValue = "0") int page ,
+            @RequestParam(defaultValue = "5") int size) {
         if (term == null || term.trim().isEmpty()) {
             return ResponseEntity.badRequest().body("Search term cannot be empty");
         }
 
         try {
-            List<Novels> novelList = novelServiceImplementation.findBySearchTerm(term.trim().toLowerCase());
+                Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending());
+                Page<Novels> novelList = novelServiceImplementation.findBySearchTerm(term.trim().toLowerCase(), pageable);
 
             if (novelList.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)

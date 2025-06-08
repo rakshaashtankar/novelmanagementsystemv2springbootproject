@@ -86,7 +86,11 @@ public class NovelServiceImplementation implements NovelsService{
     }
 
     @Override
-    public List<Novels> findBySearchTerm(String searchTerm) {
-        return novelsRepository.findBySearchText(searchTerm);
+    public Page<Novels> findBySearchTerm(String searchTerm, Pageable pageable) {
+        try {
+            return novelsRepository.findBySearchText(searchTerm, pageable);
+        } catch (RuntimeException e ) {
+            throw new RuntimeException("No novel entries in table. "+ e.getMessage());
+        }
     }
 }
