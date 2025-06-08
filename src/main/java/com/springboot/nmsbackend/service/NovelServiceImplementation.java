@@ -38,7 +38,7 @@ public class NovelServiceImplementation implements NovelsService{
     @Override
     public Page<Novels> getAllNovels(int page, int size) {
         try {
-            Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending() );
+            Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
             return novelsRepository.findAll(pageable);
         } catch (RuntimeException e ) {
             throw new RuntimeException("No novel entries in table. "+ e.getMessage());
