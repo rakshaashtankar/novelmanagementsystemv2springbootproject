@@ -5,9 +5,10 @@ import com.springboot.nmsbackend.repository.NovelsRepository;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,9 +34,10 @@ public class NovelServiceImplementation implements NovelsService{
     }
 
     @Override
-    public List<Novels> getAllNovels() {
+    public Page<Novels> getAllNovels(int page, int size) {
         try {
-            return novelsRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+            Pageable pageable = PageRequest.of(page, size, Sort.by("id").ascending() );
+            return novelsRepository.findAll(pageable);
         } catch (RuntimeException e ) {
             throw new RuntimeException("No novel entries in table. "+ e.getMessage());
         }

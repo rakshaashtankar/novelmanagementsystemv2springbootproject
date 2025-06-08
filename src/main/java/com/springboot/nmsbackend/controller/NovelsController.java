@@ -4,6 +4,8 @@ import com.springboot.nmsbackend.model.Novels;
 import com.springboot.nmsbackend.service.NovelServiceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,14 +41,19 @@ public class NovelsController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllNovels() {
+    public ResponseEntity<?> getNovels(
+            @RequestParam(defaultValue = "0") int page,       // which page, default to 0
+            @RequestParam(name = "rows", defaultValue = "5") int rows  // number of rows per page
+    ) {
         try {
-            List<Novels> novelList = novelServiceImplementation.getAllNovels();
+
+            Page<Novels> novelList = novelServiceImplementation.getAllNovels(page, rows);
             return new ResponseEntity<>(novelList, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>("An unexpected error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getNovelById(@PathVariable Integer id) {
