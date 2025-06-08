@@ -45,11 +45,11 @@ public class NovelsController {
     @GetMapping
     public ResponseEntity<?> getNovels(
             @RequestParam(defaultValue = "0") int page,       // which page, default to 0
-            @RequestParam(name = "rows", defaultValue = "5") int rows  // number of rows per page
+            @RequestParam(name = "size", defaultValue = "5") int size  // number of rows per page
     ) {
         try {
 
-            Page<Novels> novelList = novelServiceImplementation.getAllNovels(page, rows);
+            Page<Novels> novelList = novelServiceImplementation.getAllNovels(page, size);
             return new ResponseEntity<>(novelList, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>("An unexpected error occurred: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
